@@ -1,0 +1,50 @@
+{
+  "name": "kintone-plugin",
+  "version": "1.0.0",
+  "description": "q",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dts-gen": "npx @kintone/dts-gen --app--id 11 --domain https://crzbiw6muirm.cybozu.com",
+    "build": "webpack --mode production",
+    "dev": "webpack serve --mode development"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.26.10",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/preset-env": "^7.26.9",
+    "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.27.0",
+    "@kintone/dts-gen": "^8.1.1",
+    "@kintone/plugin-packer": "^8.2.0",
+    "@types/lodash": "^4.17.16",
+    "@types/lodash.isequal": "^4.5.8",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.1",
+    "babel-loader": "^10.0.0",
+    "copy-webpack-plugin": "^13.0.0",
+    "css-loader": "^7.1.2",
+    "fork-ts-checker-webpack-plugin": "^9.0.3",
+    "html-webpack-plugin": "^5.6.3",
+    "style-loader": "^4.0.0",
+    "typed-css-modules": "^0.9.1",
+    "typescript": "^5.8.2",
+    "typings-for-css-modules-loader": "^0.1.1",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.1"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@kintone/webpack-plugin-kintone-plugin": "^8.0.10",
+    "@mui/icons-material": "^7.0.2",
+    "@mui/material": "^7.0.2",
+    "lodash": "^4.17.21",
+    "lodash.isequal": "^4.5.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
+}

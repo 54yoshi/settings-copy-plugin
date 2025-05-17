@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noImplicitAny": true,
+    "declarationDir": "dist/types",
+    "declaration": true,
+    "target": "es6",
+    "module": "es2015",
+    "strict": true,
+    "jsx": "react",
+  },
+  "files" : [
+    "./node_modules/@kintone/dts-gen/kintone.d.ts",
+    "./src/fields.d.ts"
+  ],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "./src/css.d.ts"
+, "src/record/index.js"  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
+}

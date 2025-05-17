@@ -1,0 +1,98 @@
+.insert-position {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  font-family: sans-serif;
+  height: 40px;
+}
+
+/* ラベル部分 */
+.insert-position__label {
+  font-size: 14px;
+  color: #000000;
+}
+
+/* ドロップダウンコンテナ */
+.insert-position__dropdown {
+  background-color: #F7F9FA;
+  border: 1px solid #E6EAEA;
+  padding: 0.4rem 1.3rem;
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  width: 200px;
+  height: 100%;
+  cursor: pointer;
+}
+
+.insert-position__select {
+  appearance: none;    /* 矢印を非表示にしたい場合はこれを使う */
+  border: none;
+  background-color: transparent;
+  font-size: 0.95rem;
+  color: #333;
+  cursor: pointer;
+  outline: none;
+  padding-right: 1.5rem;  /* 矢印スペース調整 */
+}
+
+.insert-position__select::-ms-expand {
+  display: none;
+}
+
+/* select の右側に擬似要素で矢印を入れる例 */
+.insert-position__dropdown {
+  position: relative;
+}
+.insert-position__dropdown::after {
+  content: '▼'; 
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.75rem;
+  color: #666;
+  pointer-events: none;
+}
+
+/* ホバーしたときに枠線を変える */
+.insert-position__dropdown:hover {
+  background-color: #f3f4f6;
+  border-color: #cfd1d4;
+}
+
+/* フォーカスしたとき */
+.insert-position__select:focus-visible {
+  outline: none;
+}
+
+.selectList {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+  gap: 7px;
+  background-color: #F7F9FB;
+  border: 1px solid #E6EAEA;
+  width: 100%;
+  z-index: 20;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.spaceIdItem {
+  background-color: #F7F9FB;
+  color: #000000;
+  padding: 5px 20px 5px 30px;
+}
+
+.selectedSpaceIdItem {
+  background-color: #d0ecfc;
+  color: #3498db;
+  padding: 5px 20px 5px 10px;
+}
+
+.spaceIdItem:hover {
+  background-color: #d0ecfc;
+}

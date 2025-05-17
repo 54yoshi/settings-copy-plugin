@@ -1,0 +1,164 @@
+.rawContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  border-collapse: spacing;
+  border-spacing: 10px 5px;
+  border-top: 1px solid #e3e7e8;
+  border-bottom: 1px solid #e3e7e8;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+.rawContainer:hover {
+  background-color: #C6E0F3;
+}
+
+.tabMarkDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.tabMarkDiv:hover {
+  background-color: #a3a3a3;
+}
+
+.createTab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  cursor: pointer;
+  width: max-content;
+  padding: 10px 20px;
+  background-color: #fff;
+  color: #3498db;
+  border-radius: 4px;
+}
+
+.createTab:hover {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.rowNumber {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.fieldType {
+  min-width: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.tabGroupMember{
+
+}
+
+.formRowIndex {
+  width: 50px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  text-wrap: nowrap;
+}
+
+.rowDatas {
+  min-width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.rowDatasContainer {
+  min-width: 400px;
+  overflow-x: auto; 
+  overflow-y: hidden;
+  width: 50rem;
+  scrollbar-width: none;
+}
+
+.groupDatas {
+  min-width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.rowDataLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-right: 10px;
+  white-space: nowrap;
+}
+
+.fieldValue {
+  font-size: 12px;
+}
+
+.deleteTab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tooltip-content {
+  position: absolute;
+  top: 110%;        
+  left: 50%;
+  transform: translateX(-50%);
+  background: #000;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 4px;
+  white-space: nowrap;    
+  font-size: 12px;
+  line-height: 1.4;
+  transition: opacity 0.2s;
+  z-index: 10;
+}
+
+.tooltip-content::before {
+  content: "";
+  position: absolute;
+  top: -6px;                   
+  left: 50%;                    
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent transparent rgba(0, 0, 0, 0.8) transparent;
+  z-index: 10;
+}
+
+
+@media (max-width: 1500px) {
+  .rowDatasContainer {
+    width: 40rem;
+  }
+}
+
+@media (max-width: 1300px) {
+  .rowDatasContainer {
+    width: 25rem;
+  }
+}

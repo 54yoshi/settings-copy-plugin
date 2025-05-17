@@ -1,0 +1,13 @@
+.saveButton {
+  padding: 7px 24px;
+  margin-right: 10px;
+  color: #fff;
+  background-color: #3498db;
+  width: max-content;
+  height: max-content;
+  cursor: pointer;
+}
+
+.saveButton:hover {
+  opacity: 0.8;
+}
