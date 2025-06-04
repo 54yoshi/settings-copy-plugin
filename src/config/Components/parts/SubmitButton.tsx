@@ -6,17 +6,19 @@ type Props = {
   text: string;
   color?: string;
   borderColor?: string;
+  isActive?: boolean;
 }
 
-const SubmitButton = ({ onClick, text, color, borderColor }: Props) => {
+const SubmitButton = ({ onClick, text, color, borderColor, isActive = true }: Props) => {
   return (
     <div 
       style={{
         backgroundColor: color ?? '#3498db',
         border: `1px solid ${borderColor ?? '#3498db'}`,
+        cursor: isActive ? 'pointer' : 'not-allowed',
       }} 
       className="saveButton" 
-      onClick={onClick}
+      onClick={() => isActive && onClick()}
     >
       {text}
     </div>

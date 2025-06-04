@@ -1,0 +1,85 @@
+* {
+  box-sizing: border-box;
+  user-select: none;
+  margin: 0;
+  padding: 0;
+}
+
+.config {
+  color: black;
+  background-color: rgb(255, 255, 255);
+  padding: 0 25px 35px;
+  position: relative;
+  max-width: 1040px;
+}
+
+.configHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 20px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.inputLabel {
+  font-size: 14px;
+  color: #000000; 
+  margin-bottom: 5px;
+}
+
+.configHeaderButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.selectContainer {
+  width: 100%;
+  background-color: #F7F9FB;
+  border: 1px solid #E6EAEA;
+  overflow: auto;
+  height: 55vh;
+  margin-top: 48px;
+  position: relative;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.announceMessage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 1550px) {
+}
+
+@media (max-width: 1230px) {
+}
+
+.configDescription {
+  font-size: 16px;
+  margin-top: 32px;
+  color: red;
+}
+
+.configDescription p {
+  margin-top: 24px;
+}
+
+.configDescription span {
+  border-bottom: 1px solid red;
+}
+
+.link {
+  text-decoration: underline;
+  color: red;
+  font-weight: bold;
+}

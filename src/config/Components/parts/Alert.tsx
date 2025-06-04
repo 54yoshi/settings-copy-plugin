@@ -1,36 +1,15 @@
 import React from 'react';
 import SubmitButton from './SubmitButton';
-import CancelButton from './CancelButton';
 
 type Props = {
-  setIsAlertOpen: (isAlertOpen: boolean) => void;
-  setIsClean: (isClean: boolean) => void;
-  handleUnload: (e: BeforeUnloadEvent) => void;
+  setIsOpenAlertModal: (isOpenAlertModal: boolean) => void;
 }
 
+const baseUrl = location.origin;
+
 const Alert: React.FC<Props> = ({ 
-  setIsAlertOpen, 
-  setIsClean,
-  handleUnload,
+  setIsOpenAlertModal
 }) => {
-
-  function handleCancel(){
-    setIsClean(false);
-    setIsAlertOpen(false);
-  }
-
-  function handleDelete(){
-    setIsClean(true);
-    window.removeEventListener('beforeunload', handleUnload);
-    const appId = kintone.app.getId();
-    const baseUrl = location.origin;
-    const pluginListUrl = `${baseUrl}/k/admin/app/${appId}/plugin/`;
-    if (window.top) {
-      window.top.location.href = pluginListUrl;
-    } else {
-      window.location.href = pluginListUrl;
-    }
-  }
 
   return(
     <div
@@ -50,7 +29,7 @@ const Alert: React.FC<Props> = ({
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: '600px',
+          width: '680px',
           height: '360px',
           backgroundColor: 'white',
           display: 'flex',
@@ -76,17 +55,28 @@ const Alert: React.FC<Props> = ({
           style={{
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
             justifyContent: 'center',
             width: '100%',
             height: '200px',
             padding: '32px',
             backgroundColor: '#F7F9FA',
+            color: 'red',
             gap: '16px',
-          }}>
-          変更内容が保存されていません。<br/>
-          ページを離れると変更が破棄されます。<br/>
-          よろしいですか？
+          }}
+        >
+          データのコピーに失敗しました。<br/>
+          プラグインをコピーする前に以下の項目が有効になっているか確認してください。<br/>
+          <span>
+            検討中の新機能　＞　APIラボ　＞　<br/>
+            <a
+            href={`${baseUrl}/k/admin/system/newfeature/`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{borderBottom: '1px solid red', color: 'red'}}
+            >
+              「アプリに追加されているプラグインの設定情報を取得または更新するREST API」
+            </a>
+          </span>
         </div>
         <div 
           style={{
@@ -98,13 +88,9 @@ const Alert: React.FC<Props> = ({
               padding: '0 32px',
               gap: '24px',
         }}>
-          <CancelButton 
-            onClick={handleCancel}
-            text='キャンセル'
-          />
           <SubmitButton 
-            onClick={handleDelete}
-            text='破棄する'
+            onClick={() => setIsOpenAlertModal(false)}
+            text='閉じる'
             color='red'
             borderColor='#E6EAEA'
           />

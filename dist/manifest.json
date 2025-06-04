@@ -4,11 +4,11 @@
   "type": "APP",
   "name": {
     "en": "Tab Creation Plugin",
-    "ja": "タブ作成プラグイン"
+    "ja": "プラグイン設定コピープラグイン"
   },
   "description": {
-    "en": "Plugin for Creating Tabs",
-    "ja": "タブ作成のためのプラグインです。"
+    "en": "Plugin for Copying plugin configuration",
+    "ja": "プラグインの設定をコピーするためのプラグインです"
   },
   "homepage_url": {
     "ja": "https://example.com/ja/your-plugin-docs",
@@ -22,9 +22,6 @@
     ],
     "css": [
       "css/config.css"
-    ],
-    "required_params": [
-      "editFormData"
     ]
   },
   "desktop": {

@@ -1,0 +1,25 @@
+.alertBox {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: #fef2f2; /* bg-red-50 に近い色 */
+  border: 1px solid #f87171; /* border-red-400 */
+  color: #b91c1c;            /* text-red-700 */
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-top: 24px;
+}
+
+.icon {
+  color: #fa3f3f; /* 赤アイコン */
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}

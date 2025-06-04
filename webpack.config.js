@@ -24,7 +24,25 @@ module.exports = {
         use: 'babel-loader',
       },
       {
+        test: /\.module\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              esModule: false,
+              modules: {
+                auto: true,
+                mode: 'local',
+                localIdentName: '[name]__[local]___[hash:base64:5]',
+              },
+            },
+          },
+        ],
+      },
+      {
         test: /\.css$/,
+        exclude: /\.module\.css$/,
         use: ['style-loader', 'css-loader'],
       },
       {
@@ -38,6 +56,7 @@ module.exports = {
       },
     ],
   },
+  
   plugins: [
     new CopyWebpackPlugin({
       patterns: [
@@ -50,7 +69,7 @@ module.exports = {
     }),
     new KintonePlugin({
       manifestJSONPath: path.resolve(__dirname, 'dist', 'manifest.json'),
-      pluginZipPath: path.resolve(__dirname, 'dist', 'plugin.zip'),
+      pluginZipPath: path.resolve(__dirname, 'dist', 'settings-copy-plugin.zip'),
       privateKeyPath: path.resolve(__dirname, 'private.ppk'),
       domain: process.env.KINTONE_DOMAIN,
       basicAuth: {
