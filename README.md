@@ -15,10 +15,12 @@
 
   - `src/config.tsx` ファイル内：
     - `configDescription` クラスのついた `<div>` とその子要素
+    - `Alert`コンポーネントとその上下の論理演算子
     - 以下の状態管理用コード：
     ```ts
     const [isOpenAlertModal, setIsOpenAlertModal] = useState(false);
     ```
+  - `Alert`コンポーネントそのもの 
 -----------------------------------------------------------------------------------------------------
 
 

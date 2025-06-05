@@ -155,6 +155,7 @@ const Config: React.FC = () => {
         />
       }
 
+      {/* アップデートオプションが有効になっていない状態でAPI叩いた時のモーダル */}
       {isOpenAlertModal && 
         <Alert 
           setIsOpenAlertModal={setIsOpenAlertModal}
