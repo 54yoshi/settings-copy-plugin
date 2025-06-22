@@ -3,15 +3,15 @@ import { Dispatch, SetStateAction } from "react";
 import styles from "./Confirm.module.css";
 import CancelButton from "./CancelButton";
 import SubmitButton from "./SubmitButton";
+import { PluginType } from "../../../type/kintoneData";
 
 type Props = {
   savePlugins: () => void;
-  targetPlugins: any[];
+  targetPlugins: PluginType[];
   setIsOpenConfirmModal: Dispatch<SetStateAction<boolean>>;
 };
 
 const Confirm: React.FC<Props> = ({savePlugins, targetPlugins, setIsOpenConfirmModal}) => {
-  console.log(targetPlugins);
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
@@ -43,7 +43,7 @@ const Confirm: React.FC<Props> = ({savePlugins, targetPlugins, setIsOpenConfirmM
           <SubmitButton onClick={() => {
             savePlugins();
             setIsOpenConfirmModal(false);
-          }} text="反映" />
+          }} text="反映"/>
         </div>
       </div>
     </div>

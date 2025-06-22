@@ -3,13 +3,13 @@ import styles from "./Result.module.css";
 import SubmitButton from "./SubmitButton";
 
 type Props = {
-  fetchedPluginDatas: any[];
+  fetchedPluginDatas: {id: string, config: string, name: string}[];
   setIsOpenResultModal: Dispatch<SetStateAction<boolean>>;
 };
 
 const Result: React.FC<Props> = ({fetchedPluginDatas, setIsOpenResultModal}) => {
 
-  function testObjectContent(objs: {id: string, config: any, name: string}[]) {
+  function testObjectContent(objs: {id: string, config: string, name: string}[]) {
     const emptyConfigObj = objs.filter((obj) => Object.keys(obj.config).length === 0);
     return emptyConfigObj;
   }

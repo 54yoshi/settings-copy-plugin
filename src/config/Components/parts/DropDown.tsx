@@ -2,13 +2,14 @@ import React ,{ useState, useEffect, useRef, Dispatch, SetStateAction } from 're
 import styles from './DropDown.module.css';
 import CheckIcon from '@mui/icons-material/Check';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { App, Field, PluginType } from '../../../type/kintoneData';
 
 type InsertPositionSelectProps = {
-  apps: any[];
-  setPlugins: Dispatch<SetStateAction<any[] | null>>;
-  selectedApp: any;
-  setSelectedApp: Dispatch<SetStateAction<any>>;
-  setOtherAppFields: Dispatch<SetStateAction<any[] | null>>;
+  apps: App[] | null;
+  setPlugins: Dispatch<SetStateAction<{id: string; name: string, enabled: boolean}[] | null>>;
+  selectedApp: App | null;
+  setSelectedApp: Dispatch<SetStateAction<App | null>>;
+  setOtherAppFields: Dispatch<SetStateAction<{[key: string]: Field;} | null>>;
   setIsSameFields: Dispatch<SetStateAction<boolean>>;
 };
 
@@ -52,7 +53,7 @@ const DropDown: React.FC<InsertPositionSelectProps> = ({
     const body = { app: selectedApp.appId };
     const url  = kintone.api.url('/k/v1/preview/app/plugins.json', true);
     kintone.api(url, 'GET', body).then(resp => {
-      const targetPlugins = resp.plugins.filter((plugin: any) => plugin.id !== pluginId);
+      const targetPlugins = resp.plugins.filter((plugin: PluginType) => plugin.id !== pluginId);
       setPlugins(targetPlugins);
     })
   }, [selectedApp]);
@@ -62,13 +63,17 @@ const DropDown: React.FC<InsertPositionSelectProps> = ({
       setRegex(null);
       setIsInclude(false);
       return;
+    } 
+
+    if(!apps){
+      return;
     }
     const regex = new RegExp('^' + escapeRegExp(inputValue), 'i');
     setRegex(regex);
     setIsInclude(apps.filter(app => regex.test(app.name)).length > 0);
   }, [inputValue]);
 
-  function getOtherAppFields(appId: number) {
+  function getOtherAppFields(appId: string) {
     const body = { app: appId };
     const url  = kintone.api.url('/k/v1/app/form/fields.json', true);
     kintone.api(url, 'GET', body).then(resp => {
@@ -85,15 +90,6 @@ const DropDown: React.FC<InsertPositionSelectProps> = ({
       className={styles.insertPosition}
       ref={dropdownRef}
     >
-      {/* <div>
-        <span className={style.insertPositionLabel}>{font}</span>
-        <span style={{
-          color: 'red',
-          padding: '0 4px',
-        }}>
-          *
-        </span>
-      </div> */}
       <div className={styles.container}>
         <input
           type="text"
@@ -137,14 +133,14 @@ const DropDown: React.FC<InsertPositionSelectProps> = ({
       </div>
       {isOpen ? (
         <div className={styles.selectList}>
-          { apps.length === 0 || (regex !== null && !isInclude)? (
+          { apps?.length === 0 || (regex !== null && !isInclude)? (
             <div className={styles.app}>
               該当アプリなし
             </div>
           ) 
           : 
           (
-            apps.map((app, index) => 
+            apps?.map((app, index) => 
               (app.appId !== String(nowAppId) && (regex?.test(app.name) || !inputValue || selectedApp?.name.length === inputValue.length)) && (
                 <div 
                   className={`${styles.appItem} ${app === selectedApp && styles.selected}`}

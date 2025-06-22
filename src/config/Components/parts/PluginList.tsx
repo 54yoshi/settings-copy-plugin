@@ -2,14 +2,13 @@ import styles from './PluginList.module.css';
 import React, { useState, useEffect } from 'react';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import RadioButtonUncheckedRoundedIcon from '@mui/icons-material/RadioButtonUncheckedRounded';
-import { PluginType } from '../../../type/kintoneData';
-import CheckIcon from '@mui/icons-material/Check';
+import { PluginType, App } from '../../../type/kintoneData';
 
 type InsertPositionSelectProps = {
   plugins: PluginType[];
   setTargetPlugins: (plugins: PluginType[]) => void;
   nowSettingPlugins: PluginType[];
-  selectedApp: any[];
+  selectedApp: App | null;
 };
 
 const PluginList: React.FC<InsertPositionSelectProps> = ({
@@ -20,7 +19,6 @@ const PluginList: React.FC<InsertPositionSelectProps> = ({
 }) => {
 
   const [selectIndex, setSelectIndex] = useState<number[]>([]);
-  const [isAllSelect, setIsAllSelect] = useState<boolean>(false);
 
   function handleClickRow(clickIndex: number){
     const copySelectIndex = [...selectIndex];
@@ -32,23 +30,14 @@ const PluginList: React.FC<InsertPositionSelectProps> = ({
       copySelectIndex.push(clickIndex);
     }
     setSelectIndex(copySelectIndex);
-    const targetPlugins = copyPlugins.filter((plugin, index) => copySelectIndex.includes(index));
+    const targetPlugins = copyPlugins.filter((_, index) => copySelectIndex.includes(index));
     setTargetPlugins(targetPlugins);
   }
 
   function makeSelectAll () {
     setSelectIndex(plugins.filter((plugin) => nowSettingPlugins.some(nowPlugin => nowPlugin.id === plugin.id)).map((_, index) => index));
     setTargetPlugins(plugins.filter((plugin) => nowSettingPlugins.some(nowPlugin => nowPlugin.id === plugin.id)));
-  };
-
-  // useEffect(() => {
-  //   if(plugins.filter((plugin) => nowSettingPlugins.some(nowPlugin => nowPlugin.id === plugin.id)).length === selectIndex.length){
-  //     setIsAllSelect(true);
-  //   }
-  //   if(selectIndex.length === 0){
-  //     setIsAllSelect(false);
-  //   }
-  // }, [selectIndex])
+  }; 
 
   useEffect(() => {
     setSelectIndex([]);
@@ -63,7 +52,6 @@ const PluginList: React.FC<InsertPositionSelectProps> = ({
         
         <div 
           onClick={() => {
-            // setIsAllSelect(prev => !prev);
             makeSelectAll();
           }} 
           className={styles.allSelectButton}

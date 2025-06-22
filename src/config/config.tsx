@@ -10,30 +10,41 @@ import Loading from './Components/parts/Loading';
 import Alert from './Components/parts/Alert';
 import DifFieldAlert from './Components/parts/DifFieldAlert';
 
-import { PluginType } from '../type/kintoneData';
+import { PluginType, App, Field } from '../type/kintoneData';
 
 const pluginId = kintone.$PLUGIN_ID;
 const appId: number | null = kintone.app.getId();
 const baseUrl = location.origin;
 
+type AppFields = {
+  id: string;
+  name: string;
+  enabled: boolean;
+}
+
+type PluginFields = {
+  id: string;
+  config: string;
+  name: string;
+}
 
 const Config: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [apps, setApps] = useState<any[]>([]);
-  const [plugins, setPlugins] = useState<any[] | null>(null);
-  const [selectedApp, setSelectedApp] = useState<any>(null);
+  const [apps, setApps] = useState<App[] | null>(null);
+  const [plugins, setPlugins] = useState<AppFields[] | null>(null);
+  const [selectedApp, setSelectedApp] = useState<App | null>(null);
   const [nowSettingPlugins, setNowSettingPlugins] = useState<PluginType[]>([]);
   const [targetPlugins, setTargetPlugins] = useState<PluginType[]>([]);
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
   const [isOpenResultModal, setIsOpenResultModal] = useState(false);
-  const [fetchedPluginDatas, setFetchedPluginDatas] = useState<any[]>([]);
+  const [fetchedPluginDatas, setFetchedPluginDatas] = useState<PluginFields[]>([]);
   const [isSameFields, setIsSameFields] = useState(true);
-  const [otherAppFields, setOtherAppFields] = useState<{[key: string]: any;} | null>(null);
+  const [otherAppFields, setOtherAppFields] = useState<{[key: string]: Field;} | null>(null);
 
   // アップデートオプションが本運用に移った時点で削除
   const [isOpenAlertModal, setIsOpenAlertModal] = useState(false);
   
-  const fieldsRef = useRef<any[]>([]);
+  const fieldsRef = useRef<{[key: string]: Field;} | null>(null);
   
   useEffect(() => {
     if(!appId) return;
@@ -57,7 +68,7 @@ const Config: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if(otherAppFields !== null){
+    if(otherAppFields !== null && fieldsRef.current !== null){
       const keysA = Object.keys(otherAppFields);
       const keysB = Object.keys(fieldsRef.current);
       setIsSameFields(
@@ -77,7 +88,7 @@ const Config: React.FC = () => {
   }
 
   async function fetchAllApps(limit = 100, offset = 0) {
-    let allApps: any[] = [];
+    let allApps: App[] = [];
     while (true) {
       const url = kintone.api.url('/k/v1/apps.json', true);
       const resp = await kintone.api(url, 'GET', { limit, offset });
@@ -99,10 +110,9 @@ const Config: React.FC = () => {
   async function savePlugins(){
     setIsLoading(true);
     const url = kintone.api.url('/k/v1/preview/app/plugin/config.json', true);
-    const selectedAppId = selectedApp.appId;
+    const selectedAppId = selectedApp?.appId;
 
-    let configs: { id: string; config: any; name: string }[] = [];
-
+    let configs: PluginFields[] = [];
     try{
       configs = await Promise.all(
         targetPlugins.map(async (plugin) => {
