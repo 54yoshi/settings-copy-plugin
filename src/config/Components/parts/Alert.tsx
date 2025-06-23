@@ -2,13 +2,15 @@ import React from 'react';
 import SubmitButton from './SubmitButton';
 
 type Props = {
-  setIsOpenAlertModal: (isOpenAlertModal: boolean) => void;
+  setIsOpenAlertModal: () => void;
+  children: React.ReactNode;
 }
 
 const baseUrl = location.origin;
 
 const Alert: React.FC<Props> = ({ 
-  setIsOpenAlertModal
+  setIsOpenAlertModal,
+  children,
 }) => {
 
   return(
@@ -64,7 +66,7 @@ const Alert: React.FC<Props> = ({
             gap: '16px',
           }}
         >
-          データのコピーに失敗しました。<br/>
+          {/* データのコピーに失敗しました。<br/>
           プラグインをコピーする前に以下の項目が有効になっているか確認してください。<br/>
           <span>
             検討中の新機能　＞　APIラボ　＞　<br/>
@@ -76,7 +78,8 @@ const Alert: React.FC<Props> = ({
             >
               「アプリに追加されているプラグインの設定情報を取得または更新するREST API」
             </a>
-          </span>
+          </span> */}
+          {children}
         </div>
         <div 
           style={{
@@ -89,7 +92,7 @@ const Alert: React.FC<Props> = ({
               gap: '24px',
         }}>
           <SubmitButton 
-            onClick={() => setIsOpenAlertModal(false)}
+            onClick={() => setIsOpenAlertModal()}
             text='閉じる'
             color='red'
             borderColor='#E6EAEA'

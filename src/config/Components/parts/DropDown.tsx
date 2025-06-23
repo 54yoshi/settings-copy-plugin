@@ -1,4 +1,4 @@
-import React ,{ useState, useEffect, useRef, Dispatch, SetStateAction } from 'react';
+import React ,{ useState, useEffect, useRef, useMemo, Dispatch, SetStateAction } from 'react';
 import styles from './DropDown.module.css';
 import CheckIcon from '@mui/icons-material/Check';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -26,8 +26,8 @@ const DropDown: React.FC<InsertPositionSelectProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
-  const [regex, setRegex] = useState<RegExp | null>(null);
-  const [isInclude, setIsInclude] = useState<boolean>(false);
+  // const [regex, setRegex] = useState<RegExp | null>(null);
+  // const [isInclude, setIsInclude] = useState<boolean>(false);
   const [isFocus, setIsFocus] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -58,20 +58,34 @@ const DropDown: React.FC<InsertPositionSelectProps> = ({
     })
   }, [selectedApp]);
 
-  useEffect(() => {
-    if(inputValue === ''){
-      setRegex(null);
-      setIsInclude(false);
-      return;
-    } 
+  // useEffect(() => {
+  //   if(inputValue === ''){
+  //     setRegex(null);
+  //     setIsInclude(false);
+  //     return;
+  //   } 
 
-    if(!apps){
-      return;
+  //   if(!apps){
+  //     return;
+  //   }
+  //   const regex = new RegExp('^' + escapeRegExp(inputValue), 'i');
+  //   setRegex(regex);
+  //   setIsInclude(apps.filter(app => regex.test(app.name)).length > 0);
+  // }, [inputValue]);
+
+  const regex = useMemo(() => {
+    if(inputValue === ''){
+      return null;
     }
-    const regex = new RegExp('^' + escapeRegExp(inputValue), 'i');
-    setRegex(regex);
-    setIsInclude(apps.filter(app => regex.test(app.name)).length > 0);
+    return new RegExp('^' + escapeRegExp(inputValue), 'i');
   }, [inputValue]);
+
+  const isInclude = useMemo(() => {
+    if(regex === null || !apps){
+      return false;
+    }
+    return apps.filter(app => regex.test(app.name)).length  > 0;
+  }, [inputValue, regex, apps]);
 
   function getOtherAppFields(appId: string) {
     const body = { app: appId };

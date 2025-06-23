@@ -12,10 +12,6 @@ import DifFieldAlert from './Components/parts/DifFieldAlert';
 
 import { PluginType, App, Field } from '../type/kintoneData';
 
-const pluginId = kintone.$PLUGIN_ID;
-const appId: number | null = kintone.app.getId();
-const baseUrl = location.origin;
-
 type AppFields = {
   id: string;
   name: string;
@@ -26,6 +22,11 @@ type PluginFields = {
   id: string;
   config: string;
   name: string;
+}
+
+type AlertModal = {
+  isOpen: boolean;
+  errorMessage: React.ReactNode;
 }
 
 const Config: React.FC = () => {
@@ -40,31 +41,47 @@ const Config: React.FC = () => {
   const [fetchedPluginDatas, setFetchedPluginDatas] = useState<PluginFields[]>([]);
   const [isSameFields, setIsSameFields] = useState(true);
   const [otherAppFields, setOtherAppFields] = useState<{[key: string]: Field;} | null>(null);
+  const [isOpenAlertModal, setIsOpenAlertModal] = useState<AlertModal>({
+    isOpen: false,
+    errorMessage: <></>,
+  });
 
-  // アップデートオプションが本運用に移った時点で削除
-  const [isOpenAlertModal, setIsOpenAlertModal] = useState(false);
-  
+  const pluginId = kintone.$PLUGIN_ID;
+  const appId: number | null = kintone.app.getId();
+  const baseUrl = location.origin;
   const fieldsRef = useRef<{[key: string]: Field;} | null>(null);
   
   useEffect(() => {
-    if(!appId) return;
-    fetchAllApps().then((apps) => {
-      setApps(apps);
-    });
-
-    fetchPlugins(appId).then((plugins) => {
-      const targetPlugins = plugins.filter((plugin: PluginType) => plugin.id !== pluginId);
-      setNowSettingPlugins(targetPlugins);
-    });
-
-    // このアプリのフィールドデータを取得
-    kintone.api(
-      kintone.api.url('/k/v1/preview/app/form/fields.json', true),
-      'GET',
-      {app: appId}
-    ).then((resp) => {
-      fieldsRef.current = resp.properties;
-    });
+    try{
+      if(!appId) return;
+      fetchAllApps().then((apps) => {
+        setApps(apps);
+      });
+  
+      fetchPlugins(appId).then((plugins) => {
+        const targetPlugins = plugins.filter((plugin: PluginType) => plugin.id !== pluginId);
+        setNowSettingPlugins(targetPlugins);
+      });
+  
+      // このアプリのフィールドデータを取得
+      kintone.api(
+        kintone.api.url('/k/v1/preview/app/form/fields.json', true),
+        'GET',
+        {app: appId}
+      ).then((resp) => {
+        fieldsRef.current = resp.properties;
+      });
+    } catch (error) {
+      console.error('APIエラー:', error);
+      setIsOpenAlertModal({
+        isOpen: true,
+        errorMessage: 
+        <>
+          APIエラーが発生しました。<br/>
+          もう一度お試しください。
+        </>,
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -123,11 +140,29 @@ const Config: React.FC = () => {
     } catch (error: any) {
       if(error.code === 'GAIA_OF02'){
         setIsLoading(false);
-
-        setIsOpenAlertModal(true);
+        setIsOpenAlertModal({
+          isOpen: true,
+          errorMessage: 
+            <>
+              データのコピーに失敗しました。<br/>
+              プラグインをコピーする前に以下の項目が有効になっているか確認してください。<br/>
+              <span>
+                検討中の新機能　＞　APIラボ　＞　<br/>
+                <a
+                href={`${baseUrl}/k/admin/system/newfeature/`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{borderBottom: '1px solid red', color: 'red'}}
+                >
+                  「アプリに追加されているプラグインの設定情報を取得または更新するREST API」
+                </a>
+              </span>
+            </>
+        });
         return error;
+      } else {
+        console.error('APIエラー:', error);
       }
-      return error;
     };
 
     for (const { id, config } of configs) {
@@ -165,11 +200,16 @@ const Config: React.FC = () => {
         />
       }
 
-      {/* アップデートオプションが有効になっていない状態でAPI叩いた時のモーダル */}
-      {isOpenAlertModal && 
+      {/* API叩いた時のエラーモーダル */}
+      {isOpenAlertModal.isOpen && 
         <Alert 
-          setIsOpenAlertModal={setIsOpenAlertModal}
-        />
+          setIsOpenAlertModal={() => setIsOpenAlertModal({
+            isOpen: false,
+            errorMessage: <></>,
+          })}
+        >
+          {isOpenAlertModal.errorMessage}
+        </Alert>
       }
 
       <div className={styles.config}>
