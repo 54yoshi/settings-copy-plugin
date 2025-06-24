@@ -11,6 +11,7 @@ import Alert from './Components/parts/Alert';
 import DifFieldAlert from './Components/parts/DifFieldAlert';
 
 import { PluginType, App, Field } from '../type/kintoneData';
+import { KINTONE_REST, KINTONE_UI_URLS } from './constants/endpoint';
 
 type AppFields = {
   id: string;
@@ -65,7 +66,7 @@ const Config: React.FC = () => {
   
       // このアプリのフィールドデータを取得
       kintone.api(
-        kintone.api.url('/k/v1/preview/app/form/fields.json', true),
+        kintone.api.url(KINTONE_REST.GET_FORM_FIELDS_PREVIEW, true),
         'GET',
         {app: appId}
       ).then((resp) => {
@@ -96,7 +97,7 @@ const Config: React.FC = () => {
   },[otherAppFields])
 
   function handleCancel(){
-    const pluginListUrl = `${baseUrl}/k/admin/app/${appId}/plugin/`;
+    const pluginListUrl = `${baseUrl}${KINTONE_UI_URLS.ADMIN_APP_PLUGINS}/${appId}/plugin/`;
     if (window.top) {
       window.top.location.href = pluginListUrl;
     } else {
@@ -107,7 +108,7 @@ const Config: React.FC = () => {
   async function fetchAllApps(limit = 100, offset = 0) {
     let allApps: App[] = [];
     while (true) {
-      const url = kintone.api.url('/k/v1/apps.json', true);
+      const url = kintone.api.url(KINTONE_REST.LIST_APPS, true);
       const resp = await kintone.api(url, 'GET', { limit, offset });
       allApps = allApps.concat(resp.apps);
       if (resp.apps.length < limit) {
@@ -119,14 +120,14 @@ const Config: React.FC = () => {
   }
 
   async function fetchPlugins(appId: number){
-    const url = kintone.api.url('/k/v1/preview/app/plugins.json', true);
+    const url = kintone.api.url(KINTONE_REST.LIST_PLUGINS_PREVIEW, true);
     const resp = await kintone.api(url, 'GET', { app: appId });
     return resp.plugins;
   }
 
   async function savePlugins(){
     setIsLoading(true);
-    const url = kintone.api.url('/k/v1/preview/app/plugin/config.json', true);
+    const url = kintone.api.url(KINTONE_REST.GET_PLUGIN_CONFIG_PREVIEW, true);
     const selectedAppId = selectedApp?.appId;
 
     let configs: PluginFields[] = [];
@@ -149,7 +150,7 @@ const Config: React.FC = () => {
               <span>
                 検討中の新機能　＞　APIラボ　＞　<br/>
                 <a
-                href={`${baseUrl}/k/admin/system/newfeature/`}
+                href={`${baseUrl}${KINTONE_UI_URLS.ADMIN_NEW_FEATURES}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{borderBottom: '1px solid red', color: 'red'}}
@@ -241,7 +242,7 @@ const Config: React.FC = () => {
           <p>
             プラグイン設定をコピーする前に、
             <a
-            href={`${baseUrl}/k/admin/system/newfeature/`}
+            href={`${baseUrl}${KINTONE_UI_URLS.ADMIN_NEW_FEATURES}`}
             target="_blank"
             rel="noopener noreferrer"
             className={styles.link}

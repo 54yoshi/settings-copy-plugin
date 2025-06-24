@@ -1,5 +1,6 @@
 import React from 'react';
 import SubmitButton from './SubmitButton';
+import { KINTONE_UI_URLS } from '../../constants/endpoint';
 
 type Props = {
   setIsOpenAlertModal: () => void;
@@ -71,7 +72,7 @@ const Alert: React.FC<Props> = ({
           <span>
             検討中の新機能　＞　APIラボ　＞　<br/>
             <a
-            href={`${baseUrl}/k/admin/system/newfeature/`}
+            href={`${baseUrl}${KINTONE_UI_URLS.ADMIN_NEW_FEATURES}`}
             target="_blank"
             rel="noopener noreferrer"
             style={{borderBottom: '1px solid red', color: 'red'}}

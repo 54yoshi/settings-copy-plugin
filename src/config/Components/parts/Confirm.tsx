@@ -4,6 +4,7 @@ import styles from "./Confirm.module.css";
 import CancelButton from "./CancelButton";
 import SubmitButton from "./SubmitButton";
 import { PluginType } from "../../../type/kintoneData";
+import { KINTONE_UI_URLS } from "../../constants/endpoint";
 
 type Props = {
   savePlugins: () => void;
@@ -26,7 +27,7 @@ const Confirm: React.FC<Props> = ({savePlugins, targetPlugins, setIsOpenConfirmM
           <div className={styles.listContainer}>
             {
               targetPlugins.map((plugin) => {
-                const iconUrl = `${location.origin}/k/api/dev/plugin/content/downloadIcon.do` +
+                const iconUrl = `${location.origin}${KINTONE_UI_URLS.PLUGIN_ICON_DOWNLOAD}` +
                 `?pluginId=${plugin.id}&size=SMALL`;
                 return (
                   <div className={styles.plugin}>

@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
 import styles from "./Result.module.css";
 import SubmitButton from "./SubmitButton";
+import { KINTONE_UI_URLS } from "../../constants/endpoint";
 
 type Props = {
   fetchedPluginDatas: {id: string, config: string, name: string}[];
@@ -38,7 +39,7 @@ const Result: React.FC<Props> = ({fetchedPluginDatas, setIsOpenResultModal}) => 
               <div className={styles.listContainer}>
                 {
                   testObjectContent(fetchedPluginDatas).map((plugin) => {
-                    const iconUrl = `${location.origin}/k/api/dev/plugin/content/downloadIcon.do` +
+                    const iconUrl = `${location.origin}${KINTONE_UI_URLS.PLUGIN_ICON_DOWNLOAD}` +
                     `?pluginId=${plugin.id}&size=SMALL`;
                     return (
                       <div className={styles.plugin}>

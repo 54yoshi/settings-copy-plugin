@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import RadioButtonUncheckedRoundedIcon from '@mui/icons-material/RadioButtonUncheckedRounded';
 import { PluginType, App } from '../../../type/kintoneData';
+import { KINTONE_UI_URLS } from '../../constants/endpoint';
 
 type InsertPositionSelectProps = {
   plugins: PluginType[];
@@ -60,7 +61,7 @@ const PluginList: React.FC<InsertPositionSelectProps> = ({
       </div>
       <div className={styles.pluginListContainer}>
         {nowSettingPlugins.map((item, index) => {
-          const iconUrl = `${location.origin}/k/api/dev/plugin/content/downloadIcon.do` +
+          const iconUrl = `${location.origin}${KINTONE_UI_URLS.PLUGIN_ICON_DOWNLOAD}` +
           `?pluginId=${item.id}&size=SMALL`;
           return (
             plugins.some(plugin => plugin.id.includes(item.id)) && (

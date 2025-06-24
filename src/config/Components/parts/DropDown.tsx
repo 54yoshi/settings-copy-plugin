@@ -3,6 +3,7 @@ import styles from './DropDown.module.css';
 import CheckIcon from '@mui/icons-material/Check';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { App, Field, PluginType } from '../../../type/kintoneData';
+import { KINTONE_REST } from '../../constants/endpoint';
 
 type InsertPositionSelectProps = {
   apps: App[] | null;
@@ -51,7 +52,7 @@ const DropDown: React.FC<InsertPositionSelectProps> = ({
       return;
     }
     const body = { app: selectedApp.appId };
-    const url  = kintone.api.url('/k/v1/preview/app/plugins.json', true);
+    const url  = kintone.api.url(KINTONE_REST.LIST_PLUGINS_PREVIEW, true);
     kintone.api(url, 'GET', body).then(resp => {
       const targetPlugins = resp.plugins.filter((plugin: PluginType) => plugin.id !== pluginId);
       setPlugins(targetPlugins);
@@ -89,7 +90,7 @@ const DropDown: React.FC<InsertPositionSelectProps> = ({
 
   function getOtherAppFields(appId: string) {
     const body = { app: appId };
-    const url  = kintone.api.url('/k/v1/app/form/fields.json', true);
+    const url  = kintone.api.url(KINTONE_REST.GET_FORM_FIELDS, true);
     kintone.api(url, 'GET', body).then(resp => {
       setOtherAppFields(resp.properties);
     })
