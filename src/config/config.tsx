@@ -1,14 +1,14 @@
 import styles from './Config.module.css';
 import React, { useState, useEffect, useRef } from 'react';
-import DropDown from './Components/parts/DropDown';
-import CancelButton from './Components/parts/CancelButton';
-import SubmitButton from './Components/parts/SubmitButton';
-import PluginList from './Components/parts/PluginList';
-import Confirm from './Components/parts/Confirm';
-import Result from './Components/parts/Result';
-import Loading from './Components/parts/Loading';
-import Alert from './Components/parts/Alert';
-import DifFieldAlert from './Components/parts/DifFieldAlert';
+import DropDown from './components/parts/DropDown';
+import CancelButton from './components/parts/CancelButton';
+import SubmitButton from './components/parts/SubmitButton';
+import PluginList from './components/parts/PluginList';
+import Confirm from './components/parts/Confirm';
+import Result from './components/parts/Result';
+import Loading from './components/parts/Loading';
+import Alert from './components/parts/Alert';
+import DifFieldAlert from './components/parts/DifFieldAlert';
 
 import { PluginType, App, Field } from '../type/kintoneData';
 import { KINTONE_REST, KINTONE_UI_URLS } from './constants/endpoint';
