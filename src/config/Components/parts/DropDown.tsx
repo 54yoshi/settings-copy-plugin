@@ -59,20 +59,6 @@ const DropDown: React.FC<InsertPositionSelectProps> = ({
     })
   }, [selectedApp]);
 
-  // useEffect(() => {
-  //   if(inputValue === ''){
-  //     setRegex(null);
-  //     setIsInclude(false);
-  //     return;
-  //   } 
-
-  //   if(!apps){
-  //     return;
-  //   }
-  //   const regex = new RegExp('^' + escapeRegExp(inputValue), 'i');
-  //   setRegex(regex);
-  //   setIsInclude(apps.filter(app => regex.test(app.name)).length > 0);
-  // }, [inputValue]);
 
   const regex = useMemo(() => {
     if(inputValue === ''){

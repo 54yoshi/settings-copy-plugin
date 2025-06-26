@@ -138,8 +138,8 @@ const Config: React.FC = () => {
           return {id: plugin.id, config: resp.config, name: plugin.name};
         })
       );
-    } catch (error: any) {
-      if(error.code === 'GAIA_OF02'){
+    } catch (error) {
+      if(error && typeof error === 'object' && 'code' in error && error.code === 'GAIA_OF02'){
         setIsLoading(false);
         setIsOpenAlertModal({
           isOpen: true,
@@ -150,10 +150,10 @@ const Config: React.FC = () => {
               <span>
                 検討中の新機能　＞　APIラボ　＞　<br/>
                 <a
-                href={`${baseUrl}${KINTONE_UI_URLS.ADMIN_NEW_FEATURES}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{borderBottom: '1px solid red', color: 'red'}}
+                  href={`${baseUrl}${KINTONE_UI_URLS.ADMIN_NEW_FEATURES}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{borderBottom: '1px solid red', color: 'red'}}
                 >
                   「アプリに追加されているプラグインの設定情報を取得または更新するREST API」
                 </a>
@@ -175,7 +175,6 @@ const Config: React.FC = () => {
     }
     setIsLoading(false);
     setIsOpenResultModal(true);
-    // 取得してきたプラグインの設定内容を取得
     setFetchedPluginDatas(configs);
   }
 
