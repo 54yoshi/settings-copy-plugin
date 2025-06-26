@@ -18,8 +18,19 @@ const PluginList: React.FC<InsertPositionSelectProps> = ({
   nowSettingPlugins, 
   selectedApp
 }) => {
-
+  
   const [selectIndex, setSelectIndex] = useState<number[]>([]);
+
+  console.log(plugins);
+
+  useEffect(() => {
+    setSelectIndex([]);
+    setTargetPlugins([]);
+  }, [selectedApp])
+
+  useEffect(() => {
+    console.log(selectIndex);
+  }, [selectIndex])
 
   function handleClickRow(clickIndex: number){
     const copySelectIndex = [...selectIndex];
@@ -36,14 +47,15 @@ const PluginList: React.FC<InsertPositionSelectProps> = ({
   }
 
   function makeSelectAll () {
-    setSelectIndex(plugins.filter((plugin) => nowSettingPlugins.some(nowPlugin => nowPlugin.id === plugin.id)).map((_, index) => index));
+    setSelectIndex(nowSettingPlugins.reduce((sub, nowPlugin, index) => {
+      if(plugins.some(plugin => plugin.id === nowPlugin.id)){
+        sub.push(index);
+      }
+      return sub;
+    }, [] as number[]));
+
     setTargetPlugins(plugins.filter((plugin) => nowSettingPlugins.some(nowPlugin => nowPlugin.id === plugin.id)));
   }; 
-
-  useEffect(() => {
-    setSelectIndex([]);
-    setTargetPlugins([]);
-  }, [selectedApp])
 
 
   return (
