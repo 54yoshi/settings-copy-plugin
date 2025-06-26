@@ -21,15 +21,12 @@ const PluginList: React.FC<InsertPositionSelectProps> = ({
   
   const [selectIndex, setSelectIndex] = useState<number[]>([]);
 
-  console.log(plugins);
-
   useEffect(() => {
     setSelectIndex([]);
     setTargetPlugins([]);
   }, [selectedApp])
 
   useEffect(() => {
-    console.log(selectIndex);
   }, [selectIndex])
 
   function handleClickRow(clickIndex: number){
