@@ -27,30 +27,30 @@ const Result: React.FC<Props> = ({fetchedPluginDatas, setIsOpenResultModal}) => 
             )
             :
             (
-            <div className={styles.failed}>
-              <div className={styles.section}>
-                以下のプラグインは
-                <br />
-                設定内容が空か、設定方法が特殊なため反映に失敗しました。
-                <br />
-                設定が必要な場合は手動で設定を行ってください。
+              <div className={styles.failed}>
+                <div className={styles.section}>
+                  以下のプラグインは
+                  <br />
+                  設定内容が空か、設定方法が特殊なため反映に失敗しました。
+                  <br />
+                  設定が必要な場合は手動で設定を行ってください。
+                </div>
+                <div className={styles.subTitle}>反映に失敗したプラグイン</div>
+                <div className={styles.listContainer}>
+                  {
+                    testObjectContent(fetchedPluginDatas).map((plugin) => {
+                      const iconUrl = `${location.origin}${KINTONE_UI_URLS.PLUGIN_ICON_DOWNLOAD}` +
+                      `?pluginId=${plugin.id}&size=SMALL`;
+                      return (
+                        <div className={styles.plugin}>
+                          <img src={iconUrl} alt='プラグインのアイコン画像' className={styles.iconImage} />
+                          <div className={styles.pluginName}>{plugin.name}</div>
+                        </div>
+                      )
+                    })
+                  }
+                </div>
               </div>
-              <div className={styles.subTitle}>反映に失敗したプラグイン</div>
-              <div className={styles.listContainer}>
-                {
-                  testObjectContent(fetchedPluginDatas).map((plugin) => {
-                    const iconUrl = `${location.origin}${KINTONE_UI_URLS.PLUGIN_ICON_DOWNLOAD}` +
-                    `?pluginId=${plugin.id}&size=SMALL`;
-                    return (
-                      <div className={styles.plugin}>
-                        <img src={iconUrl} alt='プラグインのアイコン画像' className={styles.iconImage} />
-                        <div className={styles.pluginName}>{plugin.name}</div>
-                      </div>
-                    )
-                  })
-                }
-              </div>
-            </div>
             )
           }
         <div className={styles.footer}>

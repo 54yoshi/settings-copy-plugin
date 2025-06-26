@@ -27,8 +27,6 @@ const DropDown: React.FC<InsertPositionSelectProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
-  // const [regex, setRegex] = useState<RegExp | null>(null);
-  // const [isInclude, setIsInclude] = useState<boolean>(false);
   const [isFocus, setIsFocus] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -57,6 +55,9 @@ const DropDown: React.FC<InsertPositionSelectProps> = ({
       const targetPlugins = resp.plugins.filter((plugin: PluginType) => plugin.id !== pluginId);
       setPlugins(targetPlugins);
     })
+    .catch(error => {
+      console.log(error);
+    });
   }, [selectedApp]);
 
 
